@@ -16,8 +16,8 @@ const genDiff = (filePath1, filePath2) => {
   const keys = _.sortBy(_.union([...Object.keys(obj1), ...Object.keys(obj2)]));
 
   const result = keys.map((key) => {
-    const inObj1 = Object.hasOwn(obj1, key);
-    const inObj2 = Object.hasOwn(obj2, key);
+    const inObj1 = _.has(obj1, key);
+    const inObj2 = _.has(obj2, key);
 
     if (inObj1 && !inObj2) {
       return `  - ${key}: ${obj1[key]}`;
