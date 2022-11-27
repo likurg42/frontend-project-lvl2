@@ -20,3 +20,7 @@
 ### Display in plain format
 
 [![Display in plain format asciinema](https://asciinema.org/a/F2etvNVTl84rl8c5V5b5kzxq9.svg)](https://asciinema.org/a/F2etvNVTl84rl8c5V5b5kzxq9)
+
+### Display in json format
+
+[![Display in json format asciinema](https://asciinema.org/a/QkqoadbgMGeZUP9DUN6G6bZwI.svg)](https://asciinema.org/a/QkqoadbgMGeZUP9DUN6G6bZwI)

@@ -1,5 +1,6 @@
 import path from 'path';
 import { cwd } from 'node:process';
+import { readFileSync } from 'node:fs';
 import { test, expect } from '@jest/globals';
 import genDiff from '../src/index.js';
 
@@ -62,6 +63,9 @@ const resultPlain = 'Property \'common.follow\' was added with value: false\n'
   + 'Property \'group2\' was removed\n'
   + 'Property \'group3\' was added with value: [complex value]';
 
+const resultJson = JSON.parse(readFileSync(getFixturePath('jsondiff.json'), 'utf-8'));
+const resultJsonString = JSON.stringify(resultJson, 0, 2);
+
 test('gendiff json stylish', () => {
   const path1 = getFixturePath('file1.json');
   const path2 = getFixturePath('file2.json');
@@ -73,7 +77,7 @@ test('gendiff yaml', () => {
   const path1 = getFixturePath('file1.yaml');
   const path2 = getFixturePath('file2.yaml');
   expect(genDiff(path1, path2)).toEqual(resultStylish);
-  const path3 = getFixturePath('file.1.json');
+  const path3 = getFixturePath('file1.json');
   expect(genDiff(path3, path2)).toEqual(resultStylish);
 });
 
@@ -83,4 +87,12 @@ test('gendiff plain', () => {
   expect(genDiff(path1, path2, 'plain')).toEqual(resultPlain);
   const path3 = getFixturePath('file1.json');
   expect(genDiff(path3, path2, 'plain')).toEqual(resultPlain);
+});
+
+test('gendiff json', () => {
+  const path1 = getFixturePath('file1.json');
+  const path2 = getFixturePath('file2.json');
+  expect(genDiff(path1, path2, 'json')).toEqual(resultJsonString);
+  const path3 = getFixturePath('file1.yaml');
+  expect(genDiff(path3, path2, 'json')).toEqual(resultJsonString);
 });

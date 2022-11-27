@@ -15,7 +15,7 @@ program
       const diff = genDiff(filePath1, filePath2, options.format);
       console.log(diff);
     } catch (e) {
-      console.log(e.message);
+      console.error(e);
     }
   });
 
