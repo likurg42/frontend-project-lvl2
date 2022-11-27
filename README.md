@@ -12,3 +12,7 @@
 ### Working with Yaml files
 
 [![Working with yaml files asciinema](https://asciinema.org/a/Uw1LVEyHxMUiQkaBimMrDIS0y.svg)](https://asciinema.org/a/Uw1LVEyHxMUiQkaBimMrDIS0y)
+
+### Working with files with deep structure
+
+[![Working with files with deep structure](https://asciinema.org/a/DhnuUxQ5KnsWSPKPFx5DqYDy7.svg)](https://asciinema.org/a/DhnuUxQ5KnsWSPKPFx5DqYDy7)
