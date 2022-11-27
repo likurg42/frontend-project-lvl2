@@ -6,9 +6,9 @@ import parse from './parsers.js';
 import getFormatter from './formatters/index.js';
 
 const makeDiffTree = (obj1, obj2) => {
-  const keys = _.union(Object.keys(obj1), Object.keys(obj2));
+  const keys = _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
 
-  return keys.sort().map((key) => {
+  return keys.map((key) => {
     const inObj1 = _.has(obj1, key);
     const inObj2 = _.has(obj2, key);
     const changed = obj1[key] !== obj2[key];
