@@ -2,11 +2,10 @@ import path from 'path';
 import { cwd } from 'node:process';
 import { test, expect } from '@jest/globals';
 import genDiff from '../src/index.js';
-import stylish from '../src/stylish.js';
 
 const getFixturePath = (filename) => path.join(cwd(), '__fixtures__', filename);
 
-const result = `{
+const resultStylish = `{
     common: {
       + follow: false
         setting1: Value 1
@@ -51,15 +50,37 @@ const result = `{
     }
 }`;
 
-test('gendiff json', () => {
+const resultPlain = 'Property \'common.follow\' was added with value: false\n'
+  + 'Property \'common.setting2\' was removed\n'
+  + 'Property \'common.setting3\' was updated. From true to null\n'
+  + 'Property \'common.setting4\' was added with value: \'blah blah\'\n'
+  + 'Property \'common.setting5\' was added with value: [complex value]\n'
+  + 'Property \'common.setting6.doge.wow\' was updated. From \'\' to \'so much\'\n'
+  + 'Property \'common.setting6.ops\' was added with value: \'vops\'\n'
+  + 'Property \'group1.baz\' was updated. From \'bas\' to \'bars\'\n'
+  + 'Property \'group1.nest\' was updated. From [complex value] to \'str\'\n'
+  + 'Property \'group2\' was removed\n'
+  + 'Property \'group3\' was added with value: [complex value]';
+
+test('gendiff json stylish', () => {
   const path1 = getFixturePath('file1.json');
   const path2 = getFixturePath('file2.json');
 
-  expect(stylish(genDiff(path1, path2))).toEqual(result);
+  expect(genDiff(path1, path2)).toEqual(resultStylish);
 });
 
 test('gendiff yaml', () => {
   const path1 = getFixturePath('file1.yaml');
   const path2 = getFixturePath('file2.yaml');
-  expect(stylish(genDiff(path1, path2))).toEqual(result);
+  expect(genDiff(path1, path2)).toEqual(resultStylish);
+  const path3 = getFixturePath('file.1.json');
+  expect(genDiff(path3, path2)).toEqual(resultStylish);
+});
+
+test('gendiff plain', () => {
+  const path1 = getFixturePath('file1.json');
+  const path2 = getFixturePath('file2.json');
+  expect(genDiff(path1, path2, 'plain')).toEqual(resultPlain);
+  const path3 = getFixturePath('file1.json');
+  expect(genDiff(path3, path2, 'plain')).toEqual(resultPlain);
 });

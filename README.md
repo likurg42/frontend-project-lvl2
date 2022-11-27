@@ -15,4 +15,8 @@
 
 ### Working with files with deep structure
 
-[![Working with files with deep structure](https://asciinema.org/a/DhnuUxQ5KnsWSPKPFx5DqYDy7.svg)](https://asciinema.org/a/DhnuUxQ5KnsWSPKPFx5DqYDy7)
+[![Working with files with deep structure asciinema](https://asciinema.org/a/DhnuUxQ5KnsWSPKPFx5DqYDy7.svg)](https://asciinema.org/a/DhnuUxQ5KnsWSPKPFx5DqYDy7)
+
+### Display in plain format
+
+[![Display in plain format asciinema](https://asciinema.org/a/F2etvNVTl84rl8c5V5b5kzxq9.svg)](https://asciinema.org/a/F2etvNVTl84rl8c5V5b5kzxq9)

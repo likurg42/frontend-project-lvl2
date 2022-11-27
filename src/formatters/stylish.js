@@ -11,9 +11,9 @@ const stylish = (tree, replacer = ' ', spacesCount = 4) => {
     const bracketIndent = replacer.repeat(indentSize - spacesCount);
     const isDiff = Array.isArray(currentValue);
 
-    const formatLines = (obj, isObjDiff) => {
+    const formatLines = (data, isObjDiff) => {
       if (isObjDiff) {
-        return obj.map((line) => {
+        return data.map((line) => {
           const {
             name,
             oldValue,
@@ -41,7 +41,7 @@ const stylish = (tree, replacer = ' ', spacesCount = 4) => {
         });
       }
 
-      return Object.entries(obj).map(([key, value]) => {
+      return Object.entries(data).map(([key, value]) => {
         const line = `${currentIndent}${key}: ${iter(value, depth + 1)}`;
         return line;
       });

@@ -1,7 +1,6 @@
 #! /usr/bin/env node
 import { Command } from 'commander';
 import genDiff from '../src/index.js';
-import stylish from '../src/stylish.js';
 
 const program = new Command();
 
@@ -12,12 +11,12 @@ program
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format <formatType>', 'output format', 'stylish')
   .action((filePath1, filePath2, options) => {
-    let format;
-    if (options.format === 'stylish') {
-      format = stylish;
+    try {
+      const diff = genDiff(filePath1, filePath2, options.format);
+      console.log(diff);
+    } catch (e) {
+      console.log(e.message);
     }
-    const diff = genDiff(filePath1, filePath2);
-    console.log(format(diff));
   });
 
 program.parse();
