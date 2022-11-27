@@ -5,7 +5,8 @@ const parse = (data, ext) => {
     case '.json': {
       return JSON.parse(data);
     }
-    case '.yaml' || '.yml': {
+    case ('.yml'):
+    case ('.yaml'): {
       return yaml.load(data);
     }
     default: {

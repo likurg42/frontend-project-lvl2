@@ -64,7 +64,6 @@ const genDiff = (filePath1, filePath2, formatName = 'stylish') => {
 
   const format = getFormatter(formatName);
   const result = makeDiffTree(obj1, obj2);
-  console.log(JSON.stringify(result, 0, 2));
   return format(result);
 };
 

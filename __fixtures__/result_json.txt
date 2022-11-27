@@ -20,7 +20,9 @@
       {
         "name": "setting3",
         "oldValue": true,
-        "newValue": null,
+        "newValue": {
+          "key": "value"
+        },
         "type": "changed"
       },
       {
@@ -43,7 +45,7 @@
             "children": [
               {
                 "name": "wow",
-                "oldValue": "",
+                "oldValue": "too much",
                 "newValue": "so much",
                 "type": "changed"
               }
@@ -112,5 +114,67 @@
       "fee": 100500
     },
     "type": "added"
+  },
+  {
+    "name": "group4",
+    "children": [
+      {
+        "name": "default",
+        "oldValue": null,
+        "newValue": "",
+        "type": "changed"
+      },
+      {
+        "name": "foo",
+        "oldValue": 0,
+        "newValue": null,
+        "type": "changed"
+      },
+      {
+        "name": "isNested",
+        "oldValue": false,
+        "newValue": "none",
+        "type": "changed"
+      },
+      {
+        "name": "key",
+        "value": false,
+        "type": "added"
+      },
+      {
+        "name": "nest",
+        "children": [
+          {
+            "name": "bar",
+            "oldValue": "",
+            "newValue": 0,
+            "type": "changed"
+          },
+          {
+            "name": "isNested",
+            "value": true,
+            "type": "removed"
+          }
+        ],
+        "type": "nested"
+      },
+      {
+        "name": "someKey",
+        "value": true,
+        "type": "added"
+      },
+      {
+        "name": "type",
+        "oldValue": "bas",
+        "newValue": "bar",
+        "type": "changed"
+      }
+    ],
+    "type": "nested"
+  },
+  {
+    "name": "language",
+    "value": "js",
+    "type": "unchanged"
   }
 ]
