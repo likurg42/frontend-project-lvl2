@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
 const plain = (tree) => {
-  const iter = (value, ancestors) => {
-    if (!Array.isArray(value)) {
+  const iter = (el, ancestors) => {
+    if (!Array.isArray(el)) {
       return [];
     }
 
@@ -22,6 +22,8 @@ const plain = (tree) => {
       const resultLines = data.flatMap((line) => {
         const {
           name,
+          value,
+          children,
           oldValue,
           newValue,
           type,
@@ -34,20 +36,24 @@ const plain = (tree) => {
         }
 
         if (type === 'added') {
-          return `Property '${currentAncestors}' was added with value: ${getDisplayValue(newValue)}`;
+          return `Property '${currentAncestors}' was added with value: ${getDisplayValue(value)}`;
         }
 
         if (type === 'removed') {
           return `Property '${currentAncestors}' was removed`;
         }
 
-        return iter(oldValue, currentAncestors);
+        if (type === 'nested') {
+          return iter(children, currentAncestors);
+        }
+
+        return [];
       });
 
       return resultLines;
     };
 
-    return [...formatLines(value)].join('\n');
+    return [...formatLines(el)].join('\n');
   };
 
   return iter(tree, '');

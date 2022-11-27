@@ -1,20 +1,20 @@
 [
   {
     "name": "common",
-    "oldValue": [
+    "children": [
       {
         "name": "follow",
-        "newValue": false,
+        "value": false,
         "type": "added"
       },
       {
         "name": "setting1",
-        "oldValue": "Value 1",
+        "value": "Value 1",
         "type": "unchanged"
       },
       {
         "name": "setting2",
-        "oldValue": 200,
+        "value": 200,
         "type": "removed"
       },
       {
@@ -25,22 +25,22 @@
       },
       {
         "name": "setting4",
-        "newValue": "blah blah",
+        "value": "blah blah",
         "type": "added"
       },
       {
         "name": "setting5",
-        "newValue": {
+        "value": {
           "key5": "value5"
         },
         "type": "added"
       },
       {
         "name": "setting6",
-        "oldValue": [
+        "children": [
           {
             "name": "doge",
-            "oldValue": [
+            "children": [
               {
                 "name": "wow",
                 "oldValue": "",
@@ -48,27 +48,27 @@
                 "type": "changed"
               }
             ],
-            "type": "unchanged"
+            "type": "nested"
           },
           {
             "name": "key",
-            "oldValue": "value",
+            "value": "value",
             "type": "unchanged"
           },
           {
             "name": "ops",
-            "newValue": "vops",
+            "value": "vops",
             "type": "added"
           }
         ],
-        "type": "unchanged"
+        "type": "nested"
       }
     ],
-    "type": "unchanged"
+    "type": "nested"
   },
   {
     "name": "group1",
-    "oldValue": [
+    "children": [
       {
         "name": "baz",
         "oldValue": "bas",
@@ -77,7 +77,7 @@
       },
       {
         "name": "foo",
-        "oldValue": "bar",
+        "value": "bar",
         "type": "unchanged"
       },
       {
@@ -89,11 +89,11 @@
         "type": "changed"
       }
     ],
-    "type": "unchanged"
+    "type": "nested"
   },
   {
     "name": "group2",
-    "oldValue": {
+    "value": {
       "abc": 12345,
       "deep": {
         "id": 45
@@ -103,7 +103,7 @@
   },
   {
     "name": "group3",
-    "newValue": {
+    "value": {
       "deep": {
         "id": {
           "number": 45

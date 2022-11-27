@@ -5,19 +5,19 @@ import _ from 'lodash';
 import parse from './parsers.js';
 import getFormatter from './formatters/index.js';
 
-const makeDiffTree = (obj1, obj2 = null) => {
+const makeDiffTree = (obj1, obj2) => {
   const keys = _.union(Object.keys(obj1), Object.keys(obj2));
 
   return keys.sort().map((key) => {
     const inObj1 = _.has(obj1, key);
     const inObj2 = _.has(obj2, key);
-    const hasChanged = obj1[key] !== obj2[key]
-      && (!_.isObject(obj1[key]) || !_.isObject(obj2[key]));
+    const changed = obj1[key] !== obj2[key];
+    const nested = _.isObject(obj1[key]) && _.isObject(obj2[key]);
 
     if (!inObj2) {
       return {
         name: key,
-        oldValue: _.isObject(obj1[key]) ? _.cloneDeep(obj1[key]) : obj1[key],
+        value: _.isObject(obj1[key]) ? _.cloneDeep(obj1[key]) : obj1[key],
         type: 'removed',
       };
     }
@@ -25,12 +25,20 @@ const makeDiffTree = (obj1, obj2 = null) => {
     if (!inObj1) {
       return {
         name: key,
-        newValue: _.isObject(obj2[key]) ? _.cloneDeep(obj2[key]) : obj2[key],
+        value: _.isObject(obj2[key]) ? _.cloneDeep(obj2[key]) : obj2[key],
         type: 'added',
       };
     }
 
-    if (hasChanged) {
+    if (nested) {
+      return {
+        name: key,
+        children: _.isObject(obj1[key]) ? makeDiffTree(obj1[key], obj2[key]) : obj1[key],
+        type: 'nested',
+      };
+    }
+
+    if (changed) {
       return {
         name: key,
         oldValue: _.isObject(obj1[key]) ? _.cloneDeep(obj1[key]) : obj1[key],
@@ -41,7 +49,7 @@ const makeDiffTree = (obj1, obj2 = null) => {
 
     return {
       name: key,
-      oldValue: _.isObject(obj1[key]) ? makeDiffTree(obj1[key], obj2[key]) : obj1[key],
+      value: _.isObject(obj1[key]) ? _.cloneDeep(obj1[key]) : obj1[key],
       type: 'unchanged',
     };
   });
@@ -56,6 +64,7 @@ const genDiff = (filePath1, filePath2, formatName = 'stylish') => {
 
   const format = getFormatter(formatName);
   const result = makeDiffTree(obj1, obj2);
+  console.log(JSON.stringify(result, 0, 2));
   return format(result);
 };
 
