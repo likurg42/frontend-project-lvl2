@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "private": "true",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/likurg42/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/likurg42/frontend-project-lvl2/actions)",
+  "description": "Difference generator",
   "type": "module",
   "main": "./src/index.js",
   "bin": {
