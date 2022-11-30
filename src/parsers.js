@@ -10,7 +10,7 @@ const parse = (data, ext) => {
       return yaml.load(data);
     }
     default: {
-      return null;
+      throw new Error(`Unknown extension - ${ext}`);
     }
   }
 };
