@@ -1,12 +1,23 @@
 import _ from 'lodash';
 
 const stylish = (tree) => {
-  const spacesCount = 4;
   const replacer = ' ';
+  const spacesCount = 4;
+  const diffTypes = {
+    added: '+',
+    removed: '-',
+  };
 
-  const getIndent = (depth) => {
-    const indentSize = depth * spacesCount;
-    return replacer.repeat(indentSize);
+  const getIndent = (type, depth) => {
+    const indentSize = replacer.repeat(spacesCount);
+
+    if (type !== null && type in diffTypes) {
+      const indent = indentSize.repeat(depth - 1);
+      return `${indent}${replacer.repeat(2)}${diffTypes[type]}${replacer}`;
+    }
+
+    const indent = indentSize.repeat(depth);
+    return `${indent}`;
   };
 
   const format = (data, depth) => {
@@ -14,13 +25,18 @@ const stylish = (tree) => {
       return data;
     }
 
-    return `{\n${Object.entries(data).map(([key, value]) => {
-      const line = `${getIndent(depth)}${key}: ${format(value, depth + 1)}`;
-      return line;
-    }).join('\n')}\n${getIndent(depth - 1)}}`;
+    const lines = Object
+      .entries(data)
+      .map(([key, value]) => `${getIndent(null, depth)}${key}: ${format(value, depth + 1)}`);
+
+    return [
+      '{',
+      ...lines,
+      `${getIndent(null, depth - 1)}}`,
+    ].join('\n');
   };
 
-  const iter = (line, depth) => {
+  const iter = (elem, depth) => {
     const {
       name,
       value,
@@ -28,26 +44,25 @@ const stylish = (tree) => {
       oldValue,
       newValue,
       type,
-    } = line;
-
-    const oldValueIndent = `${getIndent(depth).slice(0, -2)}- `;
-    const newValueIndent = `${getIndent(depth).slice(0, -2)}+ `;
+    } = elem;
 
     switch (type) {
-      case 'unchanged': {
-        return `${getIndent(depth)}${name}: ${format(value, depth + 1)}`;
+      case 'unchanged':
+      case 'added':
+      case 'removed': {
+        return `${getIndent(type, depth)}${name}: ${format(value, depth + 1)}`;
       }
       case 'changed': {
-        return `${oldValueIndent}${name}: ${format(oldValue, depth + 1)}\n${newValueIndent}${name}: ${format(newValue, depth + 1)}`;
-      }
-      case 'added': {
-        return `${newValueIndent}${name}: ${format(value, depth + 1)}`;
-      }
-      case 'removed': {
-        return `${oldValueIndent}${name}: ${format(value, depth + 1)}`;
+        return [
+          `${getIndent('removed', depth)}${name}: ${format(oldValue, depth + 1)}`,
+          `${getIndent('added', depth)}${name}: ${format(newValue, depth + 1)}`].join('\n');
       }
       case 'nested': {
-        return `${getIndent(depth)}${name}: {\n${children.map((el) => iter(el, depth + 1)).join('\n')}\n${getIndent(depth)}}`;
+        return [
+          `${getIndent(null, depth)}${name}: {`,
+          `${children.map((el) => iter(el, depth + 1)).join('\n')}`,
+          `${getIndent(null, depth)}}`,
+        ].join('\n');
       }
       default: {
         throw new Error('error');

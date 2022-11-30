@@ -6,7 +6,7 @@ const plain = (tree) => {
       return [];
     }
 
-    const getDisplayValue = (data) => {
+    const format = (data) => {
       if (_.isObject(data)) {
         return '[complex value]';
       }
@@ -32,11 +32,11 @@ const plain = (tree) => {
         const currentAncestors = ancestors === '' ? `${name}` : `${ancestors}.${name}`;
 
         if (type === 'changed') {
-          return `Property '${currentAncestors}' was updated. From ${getDisplayValue(oldValue)} to ${getDisplayValue(newValue)}`;
+          return `Property '${currentAncestors}' was updated. From ${format(oldValue)} to ${format(newValue)}`;
         }
 
         if (type === 'added') {
-          return `Property '${currentAncestors}' was added with value: ${getDisplayValue(value)}`;
+          return `Property '${currentAncestors}' was added with value: ${format(value)}`;
         }
 
         if (type === 'removed') {
