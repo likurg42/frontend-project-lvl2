@@ -18,8 +18,7 @@ test.each(extensions)('gendiff %s files', (extension) => {
   const path2 = getFixturePath(`file2.${extension}`);
 
   expect(genDiff(path1, path2)).toEqual(results.stylish);
-
-  styles.forEach((style) => {
-    expect(genDiff(path1, path2, style)).toEqual(results[style]);
-  });
+  expect(genDiff(path1, path2, 'stylish')).toEqual(results.stylish);
+  expect(genDiff(path1, path2, 'plain')).toEqual(results.plain);
+  expect(genDiff(path1, path2, 'json')).toEqual(results.json);
 });
